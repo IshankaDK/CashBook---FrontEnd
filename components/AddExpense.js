@@ -2,7 +2,7 @@ import React, { Component, useState } from 'react'
 import { Text, View, StyleSheet, TouchableOpacity, Image, TextInput, KeyboardAvoidingView } from 'react-native'
 // import DateTimePicker from '@react-native-community/datetimepicker'
 
-export default class AddIncome extends Component {
+export default class AddExpense extends Component {
 
     static navigationOptions = {
         title: 'Main',
@@ -37,7 +37,7 @@ export default class AddIncome extends Component {
                             fontSize: 25,
                             fontWeight: '700',
                             marginLeft: 50,
-                        }}>Add Income</Text>
+                        }}>Add Expense</Text>
                     </View>
 
 
@@ -45,7 +45,7 @@ export default class AddIncome extends Component {
                         <View style={{
                             height: 50,
                             width: 100,
-                            backgroundColor: '#22ce99',
+                            backgroundColor: '#fc5c65',
                             borderRadius: 30,
                             alignItems: 'center',
                             justifyContent: 'center',
@@ -58,7 +58,7 @@ export default class AddIncome extends Component {
                             }}>LKR</Text>
                         </View>
                         <TextInput
-                            placeholder='Income Amount '
+                            placeholder='Expense Amount '
                             keyboardType='numeric'
                             style={{
                                 fontSize: 28,
@@ -96,7 +96,7 @@ export default class AddIncome extends Component {
                         marginTop: 50,
                         margin:20,
                         padding: 25,
-                        backgroundColor: '#22ce99',
+                        backgroundColor: '#fc5c65',
                         borderRadius:20
                     }}>
                         <Text
@@ -104,11 +104,9 @@ export default class AddIncome extends Component {
                             fontSize:30,
                             fontWeight:'700',
                             textAlign:'center'
-                        }}>+Add Income</Text>
+                        }}>+Add Expense</Text>
                     </TouchableOpacity>
                 </View>
-
-
 
             </View>
         )
@@ -117,6 +115,6 @@ export default class AddIncome extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#26de81'
+        backgroundColor: '#fc5c65'
     }
 })

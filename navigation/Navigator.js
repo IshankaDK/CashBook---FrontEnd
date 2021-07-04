@@ -4,6 +4,7 @@ import { createAppContainer } from 'react-navigation';
 
 import AddIncome from '../components/AddIncome';
 import Main from '../components/Main';
+import AddExpense from '../components/AddExpense';
 
 const Stack = createStackNavigator();
 
@@ -17,6 +18,8 @@ export default function HomeStackNavigator(){
             <Stack.Screen name='Main' component={Main} />
             
             <Stack.Screen name='AddIncome' component={AddIncome} />
+
+            <Stack.Screen name='AddExpense' component={AddExpense} />
             
         </Stack.Navigator>
     );
