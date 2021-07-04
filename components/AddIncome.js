@@ -45,7 +45,7 @@ export default class AddIncome extends Component {
                         <View style={{
                             height: 50,
                             width: 100,
-                            backgroundColor: '#22ce99',
+                            backgroundColor: '#26de81',
                             borderRadius: 30,
                             alignItems: 'center',
                             justifyContent: 'center',
@@ -96,7 +96,7 @@ export default class AddIncome extends Component {
                         marginTop: 50,
                         margin:20,
                         padding: 25,
-                        backgroundColor: '#22ce99',
+                        backgroundColor: '#26de81',
                         borderRadius:20
                     }}>
                         <Text
