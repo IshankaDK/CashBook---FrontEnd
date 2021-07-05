@@ -2,6 +2,8 @@ import React, { Component, useState } from 'react'
 import { Text, View, StyleSheet, TouchableOpacity, Image, TextInput, KeyboardAvoidingView } from 'react-native'
 // import DateTimePicker from '@react-native-community/datetimepicker'
 
+import { Dropdown } from 'react-native-material-dropdown';
+
 export default class AddIncome extends Component {
 
     static navigationOptions = {
@@ -9,6 +11,10 @@ export default class AddIncome extends Component {
     };
 
     render() {
+        let data = [
+            { value: 'Banana', },
+            { value: 'Mango', },
+            { value: 'Pear', }];
 
         const { navigate } = this.props.navigation;
         return (
@@ -23,7 +29,7 @@ export default class AddIncome extends Component {
                 }}>
                     <View style={{ flexDirection: 'row', padding: 20, alignItems: 'center' }}>
                         <TouchableOpacity
-                            onPress={() => navigate('Main', { name: 'Main' })}
+                            onPress={() => navigate('Home', { name: 'Home' })}
                         >
                             <Image
                                 resizeMode='contain'
@@ -92,25 +98,24 @@ export default class AddIncome extends Component {
                         >
                         </TextInput>
                     </KeyboardAvoidingView>
+                    
                     <TouchableOpacity style={{
                         marginTop: 50,
-                        margin:20,
+                        margin: 20,
                         padding: 25,
                         backgroundColor: '#26de81',
-                        borderRadius:20
+                        borderRadius: 20
                     }}>
                         <Text
-                        style={{
-                            fontSize:30,
-                            fontWeight:'700',
-                            textAlign:'center'
-                        }}>+Add Income</Text>
+                            style={{
+                                fontSize: 30,
+                                fontWeight: '700',
+                                textAlign: 'center'
+                            }}>+Add Income</Text>
                     </TouchableOpacity>
                 </View>
-
-
-
             </View>
+            
         )
     }
 }

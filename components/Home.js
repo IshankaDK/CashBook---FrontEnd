@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, Text, TouchableOpacity, Image } from 'react-native'
 
-export default class Main extends Component {
+
+
+export default class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -18,7 +20,9 @@ export default class Main extends Component {
       <View style={styles.container}>
         <View style={{ paddingTop: 10 }}>
           <View style={{ flexDirection: 'row', marginHorizontal: 15, marginBottom: 20, justifyContent: 'space-between' }}>
-            <TouchableOpacity >
+            <TouchableOpacity 
+               onPress={(navigation) => navigation.openDrawer() }
+            >
               <Image
                 resizeMode='contain'
                 style={{ height: 40, width: 40 }}
@@ -70,7 +74,7 @@ export default class Main extends Component {
         }}>
           <View style={{ flexDirection: 'row', paddingTop: 40, justifyContent: 'space-around' }}>
             <TouchableOpacity
-              onPress={() => navigate('AddIncome', { name: 'AddIncome' })}
+              onPress={() => navigate('Add Income', { name: 'AddIncome' })}
               style={{
                 width: 150,
                 height: 150,
@@ -91,7 +95,7 @@ export default class Main extends Component {
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={() => navigate('AddExpense', { name: 'AddExpense' })}
+              onPress={() => navigate('Add Expense', { name: 'AddExpense' })}
               style={{
                 width: 150,
                 height: 150,
