@@ -23,7 +23,7 @@ export default class AddExpense extends Component {
                 }}>
                     <View style={{ flexDirection: 'row', padding: 20, alignItems: 'center' }}>
                         <TouchableOpacity
-                            onPress={() => navigate('Main', { name: 'Main' })}
+                            onPress={() => navigate('Home', { name: 'Home' })}
                         >
                             <Image
                                 resizeMode='contain'
