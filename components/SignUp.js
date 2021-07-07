@@ -4,17 +4,38 @@ import { KeyboardAvoidingView, TextInput, StyleSheet, Text, TouchableOpacity, Vi
 export default class Login extends Component {
     constructor(props) {
         super(props);
-
+        this.state = {
+            name: '',
+            email: '',
+            password: '',
+        };
     }
-    state = {
-        name: '',
-        email: '',
-        password: '',
-    };
+
+    clearText = () => {
+        this.setState({ name: '' })
+        this.setState({ email: '' })
+        this.setState({ password: '' })
+    }
     render() {
         const { navigate } = this.props.navigation;
         return (
             <View style={styles.container}>
+                {/* <View style={styles.container0}>
+                    <Text
+                        style={{
+                            fontSize: 60, fontWeight: '700',
+                            color: '#ced6e0',
+                        }}>
+                        Cash Book
+                    </Text>
+                    <Text
+                        style={{
+                            fontSize: 20, fontWeight: '500',
+                            color: '#ced6e0',
+                        }}>
+                        Income-Expense Tracker
+                    </Text>
+                </View> */}
                 <KeyboardAvoidingView style={styles.container1}>
                     <TextInput
                         placeholder='Name'
@@ -82,14 +103,15 @@ export default class Login extends Component {
                                             "Cash Book",
                                             "Signed Up Successfully, Please Login",
                                             [
-                                              {
-                                                text: "Cancel",
-                                                onPress: () => console.log("Cancel Pressed"),
-                                                style: "cancel"
-                                              },
-                                              { text: "OK", onPress: () =>  navigate('Login', { name: 'Login' }) }
+                                                {
+                                                    text: "Cancel",
+                                                    onPress: () => console.log("Cancel Pressed"),
+                                                    style: "cancel"
+                                                },
+                                                { text: "OK", onPress: () => navigate('Login', { name: 'Login' }) }
                                             ]
-                                          );
+                                        );
+                                        this.clearText()
                                     }
                                 })
                                 .catch((error) => {
@@ -97,9 +119,9 @@ export default class Login extends Component {
                                         "SignUp Error..!",
                                         "Please enter Valid Details",
                                         [
-                                          { text: "OK", onPress: () =>  navigate('SignUp', { name: 'SignUp' }) }
+                                            { text: "OK", onPress: () => navigate('SignUp', { name: 'SignUp' }) }
                                         ]
-                                      );
+                                    );
                                 })
                         }
                         }
@@ -116,7 +138,8 @@ export default class Login extends Component {
                         <Text style={{
                             color: '#000',
                             fontWeight: '700',
-                            textAlign: 'center'
+                            textAlign: 'center',
+                            fontSize:16
                         }}>
                             Sign Up
                         </Text>
@@ -158,13 +181,20 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#353b48'
 
-    }, container1: {
-        flex: 3,
+    },
+    // container0: {
+    //     flex: 2,
+    //     justifyContent: 'center',
+    //     alignItems: 'center',
+    // },
+    container1: {
+        flex: 2,
         justifyContent: 'flex-end',
         alignItems: 'center',
 
+
     },
     container2: {
-        flex: 1,
+        flex: 0.75,
     }
 })

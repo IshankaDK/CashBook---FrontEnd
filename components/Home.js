@@ -8,6 +8,7 @@ export default class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      // userId:''
     };
   }
 
@@ -18,31 +19,20 @@ export default class Home extends Component {
   getData = async () => {
     try {
       const isLogedin = await AsyncStorage.getItem('isLogedIn')
-      const userId = await AsyncStorage.getItem('userId')
-      if (userId !== null) {
+       const userId = await AsyncStorage.getItem('userId')
         console.log("isLogedin " + isLogedin);
-        console.log("Active User " + userId);
-      }
+        console.log("Active User " + userId );
+      
     } catch (e) {
       // error reading value
       console.log(e);
     }
   }
-  removeValue = async () => {
-    try {
-      await AsyncStorage.removeItem('isLogedIn')
-      console.log("data removed ");
-    } catch(e) {
-      // remove error
-    }
-  
-    console.log('Done.')
-  }
 
   render() {
     const { navigate } = this.props.navigation;
     return (
-      
+
       <View style={styles.container}>
         <View style={{ paddingTop: 10 }}>
           <View style={{ flexDirection: 'row', marginHorizontal: 15, marginBottom: 20, justifyContent: 'space-between' }}>
@@ -57,12 +47,12 @@ export default class Home extends Component {
               />
             </TouchableOpacity>
             <TouchableOpacity
-            onPress={()=>{
-              AsyncStorage.removeItem('isLogedIn');
-              AsyncStorage.removeItem('userId');
-              navigate('Login', { name: 'Login' })
-            }}
-            
+              onPress={() => {
+                AsyncStorage.removeItem('isLogedIn');
+                AsyncStorage.removeItem('userId');
+                navigate('Login', { name: 'Login' })
+              }}
+
             >
               <Image
                 resizeMode='contain'
@@ -104,7 +94,12 @@ export default class Home extends Component {
         }}>
           <View style={{ flexDirection: 'row', paddingTop: 40, justifyContent: 'space-around' }}>
             <TouchableOpacity
-              onPress={() => navigate('Add Income', { name: 'AddIncome' })}
+              onPress={() => {
+                // AsyncStorage.setItem('isLogedIn', "true")
+                // AsyncStorage.setItem('userId', this.state.userId)
+                navigate('Add Income', { name: 'AddIncome' })
+              }
+              }
               style={{
                 width: 150,
                 height: 150,

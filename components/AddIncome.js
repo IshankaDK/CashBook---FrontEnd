@@ -1,25 +1,44 @@
-import React, { Component, useState } from 'react'
-import { Text, View, StyleSheet, TouchableOpacity, Image, TextInput, KeyboardAvoidingView , } from 'react-native'
-import {Picker} from '@react-native-picker/picker'
+import React, { Component } from 'react'
+import {KeyboardAvoidingView, Text, StyleSheet, TouchableOpacity, Image, TextInput, View, Alert } from 'react-native'
+import { Picker } from '@react-native-picker/picker'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import { Dropdown } from 'react-native-material-dropdown';
 
 export default class AddIncome extends Component {
     constructor() {
         super();
         this.state = {
-            PickerSelectedVal : ''
+            userId: '',
+            amount: '',
+            note: '',
+            PickerSelectedVal: "Salary",
         };
-      }
+    }
     static navigationOptions = {
         title: 'Main',
     };
+    getData = async () => {
+        try {
+            const isLogedin = await AsyncStorage.getItem('isLogedIn')
+            this.state.userId = await AsyncStorage.getItem('userId')
+            console.log("isLogedin " + isLogedin);
+            console.log("Active User " + this.state.userId);
 
+        } catch (e) {
+            // error reading value
+            console.log(e);
+        }
+    }
+    clearText = () => {
+        this.setState({ amount: '' })
+        this.setState({ note: '' })
+    }
     render() {
         const { navigate } = this.props.navigation;
         return (
-            <View style={styles.container}>
+            <KeyboardAvoidingView style={styles.container}>
                 <KeyboardAvoidingView style={{
+                    flex:1,
                     height: 1000,
                     width: '100%',
                     backgroundColor: '#fff',
@@ -71,10 +90,12 @@ export default class AddIncome extends Component {
                                 borderBottomWidth: 1,
                                 borderBottomColor: '#000'
                             }}
+                            onChangeText={(value) => this.setState({ amount: value })}
+                            value={this.state.amount}
                         >
                         </TextInput>
                     </View>
-                    <KeyboardAvoidingView style={{ flexDirection: 'row', paddingTop: 20, paddingLeft: 10 }}>
+                    <View style={{ flexDirection: 'row', paddingTop: 20, paddingLeft: 10 }}>
                         <Image
                             resizeMode='contain'
                             style={{
@@ -91,41 +112,97 @@ export default class AddIncome extends Component {
                                 marginLeft: 10,
                                 padding: 10,
                                 borderBottomWidth: 1,
-                                borderBottomColor: '#000'
+                                borderBottomColor: '#000',
                             }}
+                            onChangeText={(value) => this.setState({ note: value })}
+                            value={this.state.note}
                         >
                         </TextInput>
-                    </KeyboardAvoidingView>
-                    <View style={{ marginTop:20, padding:10,alignItems:'center' }}>
+                    </View>
+                    <View style={{ marginTop: 20, padding: 10, alignItems: 'center' }}>
                         <Text
-                        style={{
-                            fontSize: 20,
-                            fontWeight: '700',
-                        }}>
-                    Select Catagory
+                            style={{
+                                fontSize: 20,
+                                fontWeight: '700',
+                            }}>
+                            Select Catagory
                         </Text>
                     </View>
+                    
+                    <View>
                     <Picker
-                     style={{
-                         fontSize: 25,
-                         fontWeight: '700',
-                         padding:10,
-                         margin:10
-                     }}
-                        selectedValue={this.state.PickerSelectedVal}
-                        onValueChange={(itemValue, itemIndex) => this.setState({ PickerSelectedVal: itemValue })} >
+                        style={{
+                            fontSize: 25,
+                            fontWeight: '700',
+                            padding: 10,
+                            margin: 10
+                        }}
+                        selectedValue={this.state.PickerSelectedVal }
+                        onValueChange={(value) => 
+                            this.setState({ PickerSelectedVal: value })
+                        } >
 
                         <Picker.Item label="Salary" value="Salary" />
                         <Picker.Item label="Deposits" value="Deposits" />
                         <Picker.Item label="Savings" value="Savings" />
                     </Picker>
+                    </View>
+                    <View>
                     <TouchableOpacity style={{
                         marginTop: 40,
                         margin: 20,
                         padding: 15,
                         backgroundColor: '#26de81',
                         borderRadius: 20
-                    }}>
+                    }
+                    }
+                    onPress={() => {
+                        fetch('http://192.168.1.102:3010/income', {
+                            method: 'POST',
+                            headers: {
+                                Accept: 'application/json',
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                user:this.state.userId,
+                                amount:this.state.amount,
+                                note:this.state.note,
+                                catagory:this.state.PickerSelectedVal,
+                                type:"Income"
+                            })
+                            
+                        })
+                        .then((response) => response.json())
+                        .then((json) => {
+                            if (json) {
+                                Alert.alert(
+                                    "Cash Book",
+                                    "Income Added..!",
+                                    [
+                                        {
+                                            text: "Cancel",
+                                            onPress: () => console.log("Cancel Pressed"),
+                                            style: "cancel"
+                                        },
+                                        { text: "OK", onPress: () => console.log("Ok Pressed") }
+                                    ]
+                                );
+                                this.clearText()
+                            }
+                        })
+                        .catch((error) => {
+                            console.log(error);
+                            Alert.alert(
+                                "Error..!",
+                                "Please enter Valid Details",
+                                [
+                                    { text: "OK", onPress: () => navigate('Add Income', { name: 'AddIncome' }) }
+                                ]
+                            );
+                        })
+                    }
+                    }
+                    >
                         <Text
                             style={{
                                 fontSize: 30,
@@ -133,8 +210,28 @@ export default class AddIncome extends Component {
                                 textAlign: 'center'
                             }}>+Add Income</Text>
                     </TouchableOpacity>
+                    </View>
+                  
+                    
+                   {/* <View>
+                   <TextInput
+                            placeholder='Income Amount '
+                            keyboardType='numeric'
+                            style={{
+                                fontSize: 28,
+                                marginLeft: 10,
+                                padding: 10,
+                                borderBottomWidth: 1,
+                                borderBottomColor: '#000'
+                            }}
+                            onChangeText={(value) => this.setState({ amount: value })}
+                            value={this.state.amount}
+                        >
+                        </TextInput>
+                   </View> */}
+
                 </KeyboardAvoidingView>
-            </View>
+            </KeyboardAvoidingView>
 
         )
     }

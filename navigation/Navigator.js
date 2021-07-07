@@ -1,6 +1,8 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
+import 'react-native-gesture-handler';
+
 
 
 import AddIncome from '../components/AddIncome';

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { KeyboardAvoidingView, TextInput, StyleSheet, Text, TouchableOpacity, View,Alert } from 'react-native'
+import { KeyboardAvoidingView, TextInput, StyleSheet, Text, TouchableOpacity, View, Alert } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default class Login extends Component {
@@ -10,19 +10,31 @@ export default class Login extends Component {
             password: ''
         };
     }
-    
-    // storeData = async (value) => {
-    //     try {
-    //         await AsyncStorage.setItem('isLogedIn', "true")
-    //         console.log("badu wada");
-    //     } catch (e) {
-    //         // saving error
-    //     }
-    // }
+    clearText = () => {
+        this.setState({ email: '' })
+        this.setState({ password: '' })
+    }
+
     render() {
         const { navigate } = this.props.navigation;
         return (
             <KeyboardAvoidingView style={styles.container}>
+                <View style={styles.container0}>
+                    <Text
+                        style={{
+                            fontSize: 60, fontWeight: '700',
+                            color: '#ced6e0',
+                        }}>
+                        Cash Book
+                    </Text>
+                    <Text
+                        style={{
+                            fontSize: 20, fontWeight: '500',
+                            color: '#ced6e0',
+                        }}>
+                        Income-Expense Tracker
+                    </Text>
+                </View>
                 <View style={styles.container1}>
                     <TextInput
                         placeholder='Email'
@@ -40,6 +52,7 @@ export default class Login extends Component {
                     >
                     </TextInput>
                     <TextInput
+                        secureTextEntry={true}
                         placeholder='Password'
                         style={{
                             width: '80%',
@@ -55,9 +68,9 @@ export default class Login extends Component {
                     >
                     </TextInput>
                     <TouchableOpacity
-                    //  onPress={this.storeData.bind(this)}
+                        //  onPress={this.storeData.bind(this)}
                         onPress={() => {
-                            fetch('http://192.168.1.102:3010/user?email='+this.state.email+"&password="+this.state.password, {
+                            fetch('http://192.168.1.102:3010/user?email=' + this.state.email + "&password=" + this.state.password, {
                                 method: 'GET',
                                 headers: {
                                     Accept: 'application/json',
@@ -71,25 +84,27 @@ export default class Login extends Component {
                                         AsyncStorage.setItem('userId', json._id)
                                         console.log(json._id);
                                         navigate('Home', { name: 'Home' })
-                                    }else{
+                                        this.clearText()
+                                    } else {
                                         Alert.alert(
                                             "Login Error..!",
                                             "Email and Password is invalid",
                                             [
-                                              { text: "OK", onPress: () =>  navigate('Login', { name: 'Login' }) }
+                                                { text: "OK", onPress: () => navigate('Login', { name: 'Login' }) }
                                             ]
-                                          );
+                                        );
                                     }
                                 })
-                                .catch((error) =>{
+                                .catch((error) => {
                                     Alert.alert(
                                         "Login Error..!",
                                         "Email is not valid, Please Enter valid Email",
                                         [
-                                          { text: "OK", onPress: () =>  navigate('Login', { name: 'Login' }) }
+                                            { text: "OK", onPress: () => navigate('Login', { name: 'Login' }) }
                                         ]
-                                      );
+                                    );
                                 })
+                            // .finally(this.clearText())
                         }
                         }
                         style={{
@@ -105,7 +120,8 @@ export default class Login extends Component {
                         <Text style={{
                             color: '#000',
                             fontWeight: '700',
-                            textAlign: 'center'
+                            textAlign: 'center',
+                            fontSize:16
                         }}>
                             Login
                         </Text>
@@ -145,10 +161,16 @@ export default class Login extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#34495e'
+        backgroundColor: '#34495e',
 
-    }, container1: {
-        flex: 3,
+    },
+     container0: {
+        flex: 2,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    container1: {
+        flex: 2,
         justifyContent: 'flex-end',
         alignItems: 'center',
 
