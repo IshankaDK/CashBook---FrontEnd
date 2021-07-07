@@ -10,7 +10,6 @@ export default class Login extends Component {
         name: '',
         email: '',
         password: '',
-        isRegisterd: false
     };
     render() {
         const { navigate } = this.props.navigation;
@@ -91,10 +90,17 @@ export default class Login extends Component {
                                               { text: "OK", onPress: () =>  navigate('Login', { name: 'Login' }) }
                                             ]
                                           );
-                                        this.setState({ isRegisterd: true });
                                     }
                                 })
-                                .catch((error) => console.error(error))
+                                .catch((error) => {
+                                    Alert.alert(
+                                        "SignUp Error..!",
+                                        "Please enter Valid Details",
+                                        [
+                                          { text: "OK", onPress: () =>  navigate('SignUp', { name: 'SignUp' }) }
+                                        ]
+                                      );
+                                })
                         }
                         }
                         style={{

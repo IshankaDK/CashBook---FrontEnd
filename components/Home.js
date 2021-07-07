@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, Text, TouchableOpacity, Image } from 'react-native'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { DrawerActions } from '@react-navigation/drawer';
 
@@ -14,6 +15,20 @@ export default class Home extends Component {
     title: ' Main',
   };
 
+  getData = async () => {
+    try {
+        const isLogedin = await AsyncStorage.getItem('isLogedIn')
+        const userId = await AsyncStorage.getItem('userId')
+        if (userId !== null) {
+            console.log("isLonedin "+isLogedin);
+            console.log("Active User "+userId);
+        }
+    } catch (e) {
+        // error reading value
+        console.log(e);
+    }
+}
+  
   render() {
     const { navigate } = this.props.navigation;
     return (
@@ -21,12 +36,14 @@ export default class Home extends Component {
         <View style={{ paddingTop: 10 }}>
           <View style={{ flexDirection: 'row', marginHorizontal: 15, marginBottom: 20, justifyContent: 'space-between' }}>
             <TouchableOpacity 
-              onPress={() => navigate.dispatch(DrawerActions.toggleDrawer())}
+              // onPress={() => navigate.dispatch(DrawerActions.toggleDrawer())}
+              onPress={this.getData.bind(this)}
             >
               <Image
                 resizeMode='contain'
                 style={{ height: 40, width: 40 }}
                 source={require('../assests/menu.png')}
+                
               />
             </TouchableOpacity>
             {/* <TouchableOpacity

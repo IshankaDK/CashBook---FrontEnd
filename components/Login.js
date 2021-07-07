@@ -1,14 +1,24 @@
 import React, { Component } from 'react'
 import { KeyboardAvoidingView, TextInput, StyleSheet, Text, TouchableOpacity, View,Alert } from 'react-native'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default class Login extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            email: '',
+            password: ''
+        };
     }
-    state = {
-        email: '',
-        password: ''
-    };
+    
+    // storeData = async (value) => {
+    //     try {
+    //         await AsyncStorage.setItem('isLogedIn', "true")
+    //         console.log("badu wada");
+    //     } catch (e) {
+    //         // saving error
+    //     }
+    // }
     render() {
         const { navigate } = this.props.navigation;
         return (
@@ -45,19 +55,41 @@ export default class Login extends Component {
                     >
                     </TextInput>
                     <TouchableOpacity
+                    //  onPress={this.storeData.bind(this)}
                         onPress={() => {
-                            Alert.alert(
-                                "Alert Title",
-                                "Signed Up",
-                                [
-                                  {
-                                    text: "Cancel",
-                                    onPress: () => console.log("Cancel Pressed"),
-                                    style: "cancel"
-                                  },
-                                  { text: "OK", onPress: () =>  navigate('Login', { name: 'Login' }) }
-                                ]
-                              );
+                            fetch('http://192.168.1.102:3010/user?email='+this.state.email+"&password="+this.state.password, {
+                                method: 'GET',
+                                headers: {
+                                    Accept: 'application/json',
+                                    'Content-Type': 'application/json'
+                                },
+                            })
+                                .then((response) => response.json())
+                                .then((json) => {
+                                    if (json) {
+                                        AsyncStorage.setItem('isLogedIn', "true")
+                                        AsyncStorage.setItem('userId', json._id)
+                                        console.log(json._id);
+                                        navigate('Home', { name: 'Home' })
+                                    }else{
+                                        Alert.alert(
+                                            "Login Error..!",
+                                            "Email and Password is invalid",
+                                            [
+                                              { text: "OK", onPress: () =>  navigate('Login', { name: 'Login' }) }
+                                            ]
+                                          );
+                                    }
+                                })
+                                .catch((error) =>{
+                                    Alert.alert(
+                                        "Login Error..!",
+                                        "Email is not valid, Please Enter valid Email",
+                                        [
+                                          { text: "OK", onPress: () =>  navigate('Login', { name: 'Login' }) }
+                                        ]
+                                      );
+                                })
                         }
                         }
                         style={{
