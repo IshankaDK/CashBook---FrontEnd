@@ -17,25 +17,36 @@ export default class Home extends Component {
 
   getData = async () => {
     try {
-        const isLogedin = await AsyncStorage.getItem('isLogedIn')
-        const userId = await AsyncStorage.getItem('userId')
-        if (userId !== null) {
-            console.log("isLonedin "+isLogedin);
-            console.log("Active User "+userId);
-        }
+      const isLogedin = await AsyncStorage.getItem('isLogedIn')
+      const userId = await AsyncStorage.getItem('userId')
+      if (userId !== null) {
+        console.log("isLogedin " + isLogedin);
+        console.log("Active User " + userId);
+      }
     } catch (e) {
-        // error reading value
-        console.log(e);
+      // error reading value
+      console.log(e);
     }
-}
+  }
+  removeValue = async () => {
+    try {
+      await AsyncStorage.removeItem('isLogedIn')
+      console.log("data removed ");
+    } catch(e) {
+      // remove error
+    }
   
+    console.log('Done.')
+  }
+
   render() {
     const { navigate } = this.props.navigation;
     return (
+      
       <View style={styles.container}>
         <View style={{ paddingTop: 10 }}>
           <View style={{ flexDirection: 'row', marginHorizontal: 15, marginBottom: 20, justifyContent: 'space-between' }}>
-            <TouchableOpacity 
+            <TouchableOpacity
               // onPress={() => navigate.dispatch(DrawerActions.toggleDrawer())}
               onPress={this.getData.bind(this)}
             >
@@ -43,22 +54,24 @@ export default class Home extends Component {
                 resizeMode='contain'
                 style={{ height: 40, width: 40 }}
                 source={require('../assests/menu.png')}
-                
               />
             </TouchableOpacity>
-            {/* <TouchableOpacity
-              style={{
-                borderRadius: 100, borderWidth: 5,
-                borderColor: '#00192D'
-              }}>
+            <TouchableOpacity
+            onPress={()=>{
+              AsyncStorage.removeItem('isLogedIn');
+              AsyncStorage.removeItem('userId');
+              navigate('Login', { name: 'Login' })
+            }}
+            
+            >
               <Image
                 resizeMode='contain'
                 style={{
                   height: 35, width: 35,
                 }}
-                source={require('../assests/profile.png')}
+                source={require('../assests/logout.png')}
               />
-            </TouchableOpacity> */}
+            </TouchableOpacity>
           </View>
         </View>
 

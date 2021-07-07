@@ -120,9 +120,9 @@ export default class AddIncome extends Component {
                         <Picker.Item label="Savings" value="Savings" />
                     </Picker>
                     <TouchableOpacity style={{
-                        marginTop: 70,
+                        marginTop: 40,
                         margin: 20,
-                        padding: 20,
+                        padding: 15,
                         backgroundColor: '#26de81',
                         borderRadius: 20
                     }}>

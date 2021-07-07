@@ -22,14 +22,14 @@ export default function HomeStackNavigator() {
             <Stack.Screen name='Login' component={Login} />
 
             <Stack.Screen name='SignUp' component={SignUp} />
-            
+
             <Stack.Screen name='Home' component={Home} />
 
             {/* <Stack.Screen name='toggle' component={toggle} /> */}
 
-            <Stack.Screen name='AddIncome' component={AddIncome} />
+            <Stack.Screen name='Add Income' component={AddIncome} />
 
-            <Stack.Screen name='AddExpense' component={AddExpense} />
+            <Stack.Screen name='Add Expense' component={AddExpense} />
 
         </Stack.Navigator>
     );

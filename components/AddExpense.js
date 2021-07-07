@@ -126,11 +126,11 @@ export default class AddExpense extends Component {
                         <Picker.Item label="Other" value="Other" />
                     </Picker>
                     <TouchableOpacity style={{
-                        marginTop: 50,
-                        margin:20,
-                        padding: 25,
-                        backgroundColor: '#fc5c65',
-                        borderRadius:20
+                       marginTop: 40,
+                       margin: 20,
+                       padding: 15,
+                       backgroundColor: '#fc5c65',
+                       borderRadius: 20
                     }}>
                         <Text
                         style={{
