@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, Text, TouchableOpacity, Image } from 'react-native'
 
-
+import { DrawerActions } from '@react-navigation/drawer';
 
 export default class Home extends Component {
   constructor(props) {
@@ -21,7 +21,7 @@ export default class Home extends Component {
         <View style={{ paddingTop: 10 }}>
           <View style={{ flexDirection: 'row', marginHorizontal: 15, marginBottom: 20, justifyContent: 'space-between' }}>
             <TouchableOpacity 
-               onPress={(navigation) => navigation.openDrawer() }
+              onPress={() => navigate.dispatch(DrawerActions.toggleDrawer())}
             >
               <Image
                 resizeMode='contain'

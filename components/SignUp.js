@@ -1,24 +1,42 @@
 import React, { Component } from 'react'
-import { KeyboardAvoidingView, TextInput, StyleSheet, Text, TouchableOpacity, View,Alert } from 'react-native'
+import { KeyboardAvoidingView, TextInput, StyleSheet, Text, TouchableOpacity, View, Alert } from 'react-native'
 
 export default class Login extends Component {
     constructor(props) {
         super(props);
+
     }
     state = {
+        name: '',
         email: '',
-        password: ''
+        password: '',
+        isRegisterd: false
     };
     render() {
         const { navigate } = this.props.navigation;
         return (
-            <KeyboardAvoidingView style={styles.container}>
-                <View style={styles.container1}>
+            <View style={styles.container}>
+                <KeyboardAvoidingView style={styles.container1}>
+                    <TextInput
+                        placeholder='Name'
+                        style={{
+                            width: '80%',
+                            fontSize: 15,
+                            marginLeft: 10,
+                            padding: 10,
+                            marginTop: 10,
+                            backgroundColor: '#fff',
+                            borderRadius: 25
+                        }}
+                        onChangeText={(value) => this.setState({ name: value })}
+                        value={this.state.name}
+                    >
+                    </TextInput>
                     <TextInput
                         placeholder='Email'
                         style={{
                             width: '80%',
-                            fontSize: 18,
+                            fontSize: 15,
                             marginLeft: 10,
                             padding: 10,
                             marginTop: 10,
@@ -33,7 +51,7 @@ export default class Login extends Component {
                         placeholder='Password'
                         style={{
                             width: '80%',
-                            fontSize: 18,
+                            fontSize: 15,
                             marginLeft: 10,
                             padding: 10,
                             marginTop: 10,
@@ -46,18 +64,37 @@ export default class Login extends Component {
                     </TextInput>
                     <TouchableOpacity
                         onPress={() => {
-                            Alert.alert(
-                                "Alert Title",
-                                "Signed Up",
-                                [
-                                  {
-                                    text: "Cancel",
-                                    onPress: () => console.log("Cancel Pressed"),
-                                    style: "cancel"
-                                  },
-                                  { text: "OK", onPress: () =>  navigate('Login', { name: 'Login' }) }
-                                ]
-                              );
+                            fetch('http://192.168.1.102:3010/user', {
+                                method: 'POST',
+                                headers: {
+                                    Accept: 'application/json',
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify({
+                                    name: this.state.name,
+                                    email: this.state.email,
+                                    password: this.state.password
+                                })
+                            })
+                                .then((response) => response.json())
+                                .then((json) => {
+                                    if (json) {
+                                        Alert.alert(
+                                            "Cash Book",
+                                            "Signed Up Successfully, Please Login",
+                                            [
+                                              {
+                                                text: "Cancel",
+                                                onPress: () => console.log("Cancel Pressed"),
+                                                style: "cancel"
+                                              },
+                                              { text: "OK", onPress: () =>  navigate('Login', { name: 'Login' }) }
+                                            ]
+                                          );
+                                        this.setState({ isRegisterd: true });
+                                    }
+                                })
+                                .catch((error) => console.error(error))
                         }
                         }
                         style={{
@@ -75,10 +112,10 @@ export default class Login extends Component {
                             fontWeight: '700',
                             textAlign: 'center'
                         }}>
-                            Login
+                            Sign Up
                         </Text>
                     </TouchableOpacity>
-                </View>
+                </KeyboardAvoidingView>
                 <View style={styles.container2}>
                     <View style={{
                         flexDirection: 'row', marginTop: 50,
@@ -89,23 +126,23 @@ export default class Login extends Component {
                             color: '#7f8c8d',
                             paddingRight: 15
                         }}>
-                            Don't have an account ?
+                            Already have an account ?
                         </Text>
                         <TouchableOpacity
-                            onPress={() => navigate('SignUp', { name: 'SignUp' })}
+                            onPress={() => navigate('Login', { name: 'Login' })}
                         >
                             <Text style={{
                                 color: '#fff',
                                 fontWeight: '700',
                                 textAlign: 'center'
                             }}>
-                                Sign Up
+                                Login
                             </Text>
                         </TouchableOpacity>
                     </View>
                 </View>
 
-            </KeyboardAvoidingView>
+            </View>
 
         )
     }
@@ -113,7 +150,7 @@ export default class Login extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#34495e'
+        backgroundColor: '#353b48'
 
     }, container1: {
         flex: 3,

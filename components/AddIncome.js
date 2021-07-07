@@ -1,29 +1,29 @@
 import React, { Component, useState } from 'react'
-import { Text, View, StyleSheet, TouchableOpacity, Image, TextInput, KeyboardAvoidingView } from 'react-native'
-// import DateTimePicker from '@react-native-community/datetimepicker'
+import { Text, View, StyleSheet, TouchableOpacity, Image, TextInput, KeyboardAvoidingView , } from 'react-native'
+import {Picker} from '@react-native-picker/picker'
 
 import { Dropdown } from 'react-native-material-dropdown';
 
 export default class AddIncome extends Component {
-
+    constructor() {
+        super();
+        this.state = {
+            PickerSelectedVal : ''
+        };
+      }
     static navigationOptions = {
         title: 'Main',
     };
 
     render() {
-        let data = [
-            { value: 'Banana', },
-            { value: 'Mango', },
-            { value: 'Pear', }];
-
         const { navigate } = this.props.navigation;
         return (
             <View style={styles.container}>
-                <View style={{
+                <KeyboardAvoidingView style={{
                     height: 1000,
                     width: '100%',
                     backgroundColor: '#fff',
-                    marginTop: 70,
+                    marginTop: 100,
                     borderTopLeftRadius: 40,
                     borderTopRightRadius: 40,
                 }}>
@@ -45,8 +45,6 @@ export default class AddIncome extends Component {
                             marginLeft: 50,
                         }}>Add Income</Text>
                     </View>
-
-
                     <View style={{ flexDirection: 'row', paddingTop: 20, paddingLeft: 10 }}>
                         <View style={{
                             height: 50,
@@ -98,11 +96,33 @@ export default class AddIncome extends Component {
                         >
                         </TextInput>
                     </KeyboardAvoidingView>
-                    
+                    <View style={{ marginTop:20, padding:10,alignItems:'center' }}>
+                        <Text
+                        style={{
+                            fontSize: 20,
+                            fontWeight: '700',
+                        }}>
+                    Select Catagory
+                        </Text>
+                    </View>
+                    <Picker
+                     style={{
+                         fontSize: 25,
+                         fontWeight: '700',
+                         padding:10,
+                         margin:10
+                     }}
+                        selectedValue={this.state.PickerSelectedVal}
+                        onValueChange={(itemValue, itemIndex) => this.setState({ PickerSelectedVal: itemValue })} >
+
+                        <Picker.Item label="Salary" value="Salary" />
+                        <Picker.Item label="Deposits" value="Deposits" />
+                        <Picker.Item label="Savings" value="Savings" />
+                    </Picker>
                     <TouchableOpacity style={{
-                        marginTop: 50,
+                        marginTop: 70,
                         margin: 20,
-                        padding: 25,
+                        padding: 20,
                         backgroundColor: '#26de81',
                         borderRadius: 20
                     }}>
@@ -113,9 +133,9 @@ export default class AddIncome extends Component {
                                 textAlign: 'center'
                             }}>+Add Income</Text>
                     </TouchableOpacity>
-                </View>
+                </KeyboardAvoidingView>
             </View>
-            
+
         )
     }
 }

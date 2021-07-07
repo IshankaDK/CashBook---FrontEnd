@@ -7,8 +7,8 @@ import {NavigationContainer} from '@react-navigation/native';
 export default function App(){
   return(
     <NavigationContainer>
-      {/* <HomeStackNavigator/> */}
-     <Togg/>
+      <HomeStackNavigator/>
+     {/* <Togg/> */}
     </NavigationContainer>
   );
 }

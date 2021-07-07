@@ -1,9 +1,15 @@
 import React, { Component, useState } from 'react'
 import { Text, View, StyleSheet, TouchableOpacity, Image, TextInput, KeyboardAvoidingView } from 'react-native'
 // import DateTimePicker from '@react-native-community/datetimepicker'
+import {Picker} from '@react-native-picker/picker'
 
 export default class AddExpense extends Component {
-
+    constructor() {
+        super();
+        this.state = {
+            PickerSelectedVal : ''
+        };
+      }
     static navigationOptions = {
         title: 'Main',
     };
@@ -17,7 +23,7 @@ export default class AddExpense extends Component {
                     height: 1000,
                     width: '100%',
                     backgroundColor: '#fff',
-                    marginTop: 70,
+                    marginTop: 100,
                     borderTopLeftRadius: 40,
                     borderTopRightRadius: 40,
                 }}>
@@ -92,6 +98,33 @@ export default class AddExpense extends Component {
                         >
                         </TextInput>
                     </KeyboardAvoidingView>
+                    <View style={{ marginTop:20, padding:10,alignItems:'center' }}>
+                        <Text
+                        style={{
+                            fontSize: 20,
+                            fontWeight: '700',
+                        }}>
+                    Select Catagory
+                        </Text>
+                    </View>
+                    <Picker
+                     style={{
+                         fontSize: 25,
+                         fontWeight: '700',
+                         padding:10,
+                         margin:10
+                     }}
+                        selectedValue={this.state.PickerSelectedVal}
+                        onValueChange={(itemValue, itemIndex) => this.setState({ PickerSelectedVal: itemValue })} >
+
+                        <Picker.Item label="Bills" value="Bills" />
+                        <Picker.Item label="Food" value="Food" />
+                        <Picker.Item label="Car" value="Car" />
+                        <Picker.Item label="Clothes" value="Clothes" />
+                        <Picker.Item label="House" value="House" />
+                        <Picker.Item label="Transport" value="Transport" />
+                        <Picker.Item label="Other" value="Other" />
+                    </Picker>
                     <TouchableOpacity style={{
                         marginTop: 50,
                         margin:20,
