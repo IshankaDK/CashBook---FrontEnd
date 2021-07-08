@@ -3,8 +3,6 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import 'react-native-gesture-handler';
 
-
-
 import AddIncome from '../components/AddIncome';
 import Home from '../components/Home';
 import AddExpense from '../components/AddExpense';
@@ -20,14 +18,13 @@ const screenOptionStyle = {
 
 export default function HomeStackNavigator() {
     return (
-        <Stack.Navigator screenOptions={screenOptionStyle}>
-            <Stack.Screen name='Login' component={Login} />
+        <Stack.Navigator screenOptions={screenOptionStyle} initialRouteName="Home">
 
-            <Stack.Screen name='SignUp' component={SignUp} />
+            <Stack.Screen name='Login' component={Login} />
 
             <Stack.Screen name='Home' component={Home} />
 
-            {/* <Stack.Screen name='toggle' component={toggle} /> */}
+            <Stack.Screen name='SignUp' component={SignUp} />
 
             <Stack.Screen name='Add Income' component={AddIncome} />
 

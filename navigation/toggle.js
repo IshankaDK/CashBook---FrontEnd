@@ -14,8 +14,8 @@ const Drawer = createDrawerNavigator();
 export default function toggle() {
   return (
     // <NavigationContainer>
-      <Drawer.Navigator initialRouteName="Login" >
-        <Drawer.Screen name="Login" component={Login} />
+      <Drawer.Navigator initialRouteName="Home" >
+        {/* <Drawer.Screen name="Login" component={Login} /> */}
         <Drawer.Screen name="SignUp" component={SignUp} />
         <Drawer.Screen name="Home" component={Home} />
         <Drawer.Screen name="Add Income" component={AddIncome} />

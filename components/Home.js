@@ -8,23 +8,27 @@ export default class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      // userId:''
     };
   }
 
   static navigationOptions = {
     title: ' Main',
   };
-
+  componentDidMount() {
+    this.getData()
+  }
   getData = async () => {
     try {
       const isLogedin = await AsyncStorage.getItem('isLogedIn')
-       const userId = await AsyncStorage.getItem('userId')
-        console.log("isLogedin " + isLogedin);
-        console.log("Active User " + userId );
-      
+      const userId = await AsyncStorage.getItem('userId')
+      console.log("isLogedin " + isLogedin);
+      console.log("Active User " + userId);
+
+      if (isLogedin == null) {
+          this.props.navigation.navigate("Login");
+      }
+
     } catch (e) {
-      // error reading value
       console.log(e);
     }
   }
@@ -37,8 +41,8 @@ export default class Home extends Component {
         <View style={{ paddingTop: 10 }}>
           <View style={{ flexDirection: 'row', marginHorizontal: 15, marginBottom: 20, justifyContent: 'space-between' }}>
             <TouchableOpacity
-              // onPress={() => navigate.dispatch(DrawerActions.toggleDrawer())}
-              onPress={this.getData.bind(this)}
+            // onPress={() => navigate.dispatch(DrawerActions.toggleDrawer())}
+            onPress={this.getData.bind(this)}
             >
               <Image
                 resizeMode='contain'

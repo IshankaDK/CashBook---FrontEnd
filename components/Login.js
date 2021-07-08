@@ -96,9 +96,10 @@ export default class Login extends Component {
                                     }
                                 })
                                 .catch((error) => {
+                                    console.log(error);
                                     Alert.alert(
                                         "Login Error..!",
-                                        "Email is not valid, Please Enter valid Email",
+                                        "Somthing Wrong..!",
                                         [
                                             { text: "OK", onPress: () => navigate('Login', { name: 'Login' }) }
                                         ]
@@ -152,7 +153,6 @@ export default class Login extends Component {
                         </TouchableOpacity>
                     </View>
                 </View>
-
             </KeyboardAvoidingView>
 
         )
