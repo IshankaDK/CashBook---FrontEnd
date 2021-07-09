@@ -17,12 +17,18 @@ export default class AddIncome extends Component {
     static navigationOptions = {
         title: 'Main',
     };
+    componentDidMount() {
+        this.getData()
+      }
+
     getData = async () => {
         try {
             const isLogedin = await AsyncStorage.getItem('isLogedIn')
-            this.state.userId = await AsyncStorage.getItem('userId')
-            console.log("isLogedin " + isLogedin);
-            console.log("Active User " + this.state.userId);
+            const user = await AsyncStorage.getItem('userId')
+            console.log("isLogedin at addIncome" + isLogedin);
+            console.log("Active User at addIncome " + user);
+
+          this.setState({userId : user})
 
         } catch (e) {
             // error reading value
@@ -38,7 +44,7 @@ export default class AddIncome extends Component {
         return (
             <KeyboardAvoidingView style={styles.container}>
                 <KeyboardAvoidingView style={{
-                    flex:1,
+                    // flex:1,
                     height: 1000,
                     width: '100%',
                     backgroundColor: '#fff',
@@ -127,8 +133,7 @@ export default class AddIncome extends Component {
                             }}>
                             Select Catagory
                         </Text>
-                    </View>
-                    
+                    </View>                  
                     <View>
                     <Picker
                         style={{
@@ -157,6 +162,7 @@ export default class AddIncome extends Component {
                     }
                     }
                     onPress={() => {
+                        // console.log(this.state.userId + "   wwwwwww");
                         fetch('http://192.168.1.102:3010/income', {
                             method: 'POST',
                             headers: {
@@ -179,11 +185,6 @@ export default class AddIncome extends Component {
                                     "Cash Book",
                                     "Income Added..!",
                                     [
-                                        {
-                                            text: "Cancel",
-                                            onPress: () => console.log("Cancel Pressed"),
-                                            style: "cancel"
-                                        },
                                         { text: "OK", onPress: () => console.log("Ok Pressed") }
                                     ]
                                 );
