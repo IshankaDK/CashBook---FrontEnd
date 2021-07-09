@@ -8,13 +8,15 @@ export default class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      userId: '',
+      balance:"LKR 0.00"
     };
   }
 
   static navigationOptions = {
     title: ' Main',
   };
-  
+
   componentDidMount() {
     this.getData()
   }
@@ -26,19 +28,63 @@ export default class Home extends Component {
       console.log("Active User " + userId);
 
       if (isLogedin == null) {
-          this.props.navigation.navigate("Login");
+        this.props.navigation.navigate("Login");
+      } else {
+        this.setState({ userId: userId })
+        this.getTotalIncome()
       }
 
     } catch (e) {
       console.log(e);
     }
   }
+
+  getTotalIncome = async () => {
+    let incomeTot = 0;
+    let expenseTot = 0;
+    fetch('http://192.168.1.102:3010/income?user=' + this.state.userId, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+    })
+      .then((response) => response.json())
+      .then((json) => {
+        if (json) {
+          console.log("In      "+json);
+          incomeTot=json;
+          fetch('http://192.168.1.102:3010/expense?user=' + this.state.userId, {
+            method: 'GET',
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json'
+            },
+          })
+            .then((response) => response.json())
+            .then((json) => {
+              if (json) {
+                console.log("Ex   "+json);
+                expenseTot=json;
+                let final = incomeTot-expenseTot;
+                this.setState({balance: "LKR "+ final + ".00"})
+              }
+            })
+            .catch((error) => {
+              console.log(error);
+            })
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+  }
   componentWillUnmount() {
     // fix Warning: Can't perform a React state update on an unmounted component
-    this.setState = (state,callback)=>{
-        return;
+    this.setState = (state, callback) => {
+      return;
     };
-}
+  }
   render() {
     const { navigate } = this.props.navigation;
     return (
@@ -47,8 +93,8 @@ export default class Home extends Component {
         <View style={{ paddingTop: 10 }}>
           <View style={{ flexDirection: 'row', marginHorizontal: 15, marginBottom: 20, justifyContent: 'space-between' }}>
             <TouchableOpacity
-            // onPress={() => navigate.dispatch(DrawerActions.toggleDrawer())}
-            onPress={this.getData.bind(this)}
+              // onPress={() => navigate.dispatch(DrawerActions.toggleDrawer())}
+              onPress={this.getData.bind(this)}
             >
               <Image
                 resizeMode='contain'
@@ -88,11 +134,11 @@ export default class Home extends Component {
           <Text
             style={{
               color: '#000',
-              fontSize: 47,
+              fontSize: 45,
               fontWeight: '700',
             }}
           >
-            LKR 52,410
+           {this.state.balance}
           </Text>
         </View>
         <View style={{
