@@ -83,7 +83,8 @@ export default class Login extends Component {
                                         AsyncStorage.setItem('isLogedIn', "true")
                                         AsyncStorage.setItem('userId', json._id)
                                         console.log(json._id);
-                                        navigate('Home', { name: 'Home' })
+                                        this.props.navigation.push('Home')
+                                        // navigate('Home', { name: 'Home' })
                                         this.clearText()
                                     } else {
                                         Alert.alert(
@@ -122,7 +123,7 @@ export default class Login extends Component {
                             color: '#000',
                             fontWeight: '700',
                             textAlign: 'center',
-                            fontSize:16
+                            fontSize: 16
                         }}>
                             Login
                         </Text>
@@ -164,7 +165,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#34495e',
 
     },
-     container0: {
+    container0: {
         flex: 2,
         justifyContent: 'center',
         alignItems: 'center',

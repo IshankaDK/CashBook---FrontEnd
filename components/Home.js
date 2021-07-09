@@ -42,6 +42,7 @@ export default class Home extends Component {
   getTotalIncome = async () => {
     let incomeTot = 0;
     let expenseTot = 0;
+    let final = 0;
     fetch('http://192.168.1.102:3010/income?user=' + this.state.userId, {
       method: 'GET',
       headers: {
@@ -54,6 +55,8 @@ export default class Home extends Component {
         if (json) {
           console.log("In      "+json);
           incomeTot=json;
+          final=incomeTot;
+          this.setState({balance: "LKR "+ final + ".00"})
           fetch('http://192.168.1.102:3010/expense?user=' + this.state.userId, {
             method: 'GET',
             headers: {
@@ -66,7 +69,7 @@ export default class Home extends Component {
               if (json) {
                 console.log("Ex   "+json);
                 expenseTot=json;
-                let final = incomeTot-expenseTot;
+                final = incomeTot-expenseTot;
                 this.setState({balance: "LKR "+ final + ".00"})
               }
             })
@@ -154,6 +157,7 @@ export default class Home extends Component {
                 // AsyncStorage.setItem('isLogedIn', "true")
                 // AsyncStorage.setItem('userId', this.state.userId)
                 navigate('Add Income', { name: 'AddIncome' })
+                // this.componentWillUnmount.bind(this)
               }
               }
               style={{

@@ -5,8 +5,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 export default class AddIncome extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             userId: '',
             amount: '',
@@ -54,7 +54,7 @@ export default class AddIncome extends Component {
                 }}>
                     <View style={{ flexDirection: 'row', padding: 20, alignItems: 'center' }}>
                         <TouchableOpacity
-                            onPress={() => navigate('Home', { name: 'Home' })}
+                            onPress={() => this.props.navigation.push('Home')}
                         >
                             <Image
                                 resizeMode='contain'
