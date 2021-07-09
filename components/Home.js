@@ -7,6 +7,7 @@ import { DrawerActions } from '@react-navigation/drawer';
 export default class Home extends Component {
   constructor(props) {
     super(props);
+    this.getData()
     this.state = {
       userId: '',
       balance:"LKR 0.00"
@@ -17,9 +18,9 @@ export default class Home extends Component {
     title: ' Main',
   };
 
-  componentDidMount() {
-    this.getData()
-  }
+  // componentDidMount() {
+  //   this.getData()
+  // }
   getData = async () => {
     try {
       const isLogedin = await AsyncStorage.getItem('isLogedIn')
@@ -55,7 +56,7 @@ export default class Home extends Component {
         if (json) {
           console.log("In      "+json);
           incomeTot=json;
-          final=incomeTot;
+          // final=incomeTot;
           this.setState({balance: "LKR "+ final + ".00"})
           fetch('http://192.168.1.102:3010/expense?user=' + this.state.userId, {
             method: 'GET',
@@ -82,12 +83,12 @@ export default class Home extends Component {
         console.log(error);
       })
   }
-  componentWillUnmount() {
-    // fix Warning: Can't perform a React state update on an unmounted component
-    this.setState = (state, callback) => {
-      return;
-    };
-  }
+  // componentWillUnmount() {
+  //   // fix Warning: Can't perform a React state update on an unmounted component
+  //   this.setState = (state, callback) => {
+  //     return;
+  //   };
+  // }
   render() {
     const { navigate } = this.props.navigation;
     return (
