@@ -53,7 +53,7 @@ export default class Home extends Component {
     })
       .then((response) => response.json())
       .then((json) => {
-        if (json) {
+        // if (json) {
           console.log("In      "+json);
           incomeTot=json;
           // final=incomeTot;
@@ -67,17 +67,17 @@ export default class Home extends Component {
           })
             .then((response) => response.json())
             .then((json) => {
-              if (json) {
+              // if (json) {
                 console.log("Ex   "+json);
                 expenseTot=json;
                 final = incomeTot-expenseTot;
                 this.setState({balance: "LKR "+ final + ".00"})
-              }
+              // }
             })
             .catch((error) => {
               console.log(error);
             })
-        }
+        // }
       })
       .catch((error) => {
         console.log(error);
